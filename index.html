@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>SPN Identification</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="https://github.com/milasandovals/MSandoval_Portfolio" class="logo"><strong>By</strong> M. Sandoval</a>
+									<ul class="icons">
+										<!--<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li> -->
+									</ul>
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>SPN Identification<br />
+											on CT scans</h1>
+											<p>A research project based on Machine learning</p>
+										</header>
+										<p>The research done consisted in the development of a computational code able to
+											point areas with possible SPN presence on the lungs through digitalized tomography
+											images obtained from the open repository TCIA. The objective of this project is
+											making a support diagnosis that allows to increase the diagnostic accuracy in TC
+											images, decrease the subjectivity of the pulmonary nodule diagnosis and therefore,
+											helping in the early diagnosis of lung cancer.</p>
+										<!--<ul class="actions">
+											<li><a href="#" class="button big">Learn More</a></li>-->
+										</ul>
+									</div>
+									<span class="image object">
+										<img src="images/No6.jpg" alt="" />
+										
+									</span>
+								</section>
+
+							<!-- Section 
+								<section>
+									<header class="major">
+										<h2>Erat lacinia</h2>
+									</header>
+									<div class="features">
+										<article>
+											<span class="icon fa-gem"></span>
+											<div class="content">
+												<h3>Portitor ullamcorper</h3>
+												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-paper-plane"></span>
+											<div class="content">
+												<h3>Sapien veroeros</h3>
+												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-rocket"></span>
+											<div class="content">
+												<h3>Quam lorem ipsum</h3>
+												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon solid fa-signal"></span>
+											<div class="content">
+												<h3>Sed magna finibus</h3>
+												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											</div>
+										</article>
+									</div>
+								</section>
+
+								-->
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2> Digital Image Processing  </h2>
+									</header>
+									<div class="row gtr-200">
+										<div class="col-6 col-12-medium">
+<!-- Preformatted Code -->
+
+<pre><code>#Image enhancement
+Y = dicomread('000001.dcm');
+b=imadjust(Y);
+b=adapthisteq(b);
+level = graythresh(Y);
+
+#Segmentation of the lung using binarization technique
+S2 = imbinarize(Y,level);
+
+#Identification of the thoracic cavity
+[r k]=bwlabel(S2);
+area0=0;
+for j=1:1:k
+	area=bwarea(r==j);
+	if area>area0
+		area0=area;
+		imagelabel=r==j;
+	end
+end
+cont=0;
+for j=1:1:k
+	value=bwarea(r==j);
+	if value>4000 && value<100000
+		areav(cont)=j;
+		cont=cont+1;
+	end
+end
+
+#Filling holes present in the image
+imagelabel=imfill(imagelabel,'holes');
+
+#Complement image
+imagelabel = imcomplement(imagelabel);
+
+#Multiplication of the mask obtained with the original image
+Image=immultiply(imagelabel,b);
+
+#Segmentation of the lung using binarization technique
+[x,y]=getpts
+[J, rect] = imcrop(Image,[(x-75) (y-75) 150 150]);
+</code></pre>	
+</div>
+
+<div class="col-6 col-12-medium">
+	<div class="box alt">
+		<div class="row gtr-50 gtr-uniform">
+	
+			<ul>
+				The following images reflect each of the procedures carried out by the code, in order to obtain 
+				an improved image, to later segment it and thus obtain the ROI (Region of interest), from which the 
+				main features of the SPN were extracted to be used in the machine learning.
+	
+			</ul>
+	
+			<div class="col-4"><span class="image fit"><img src="images/untitled1.jpg" alt="" /></span></div>
+			<div class="col-4"><span class="image fit"><img src="images/untitled2.jpg" alt="" /></span></div>
+			<div class="col-4"><span class="image fit"><img src="images/untitled3.jpg" alt="" /></span></div>
+			<!-- Break -->
+			<div class="col-4"><span class="image fit"><img src="images/untitled.jpg" alt="" /></span></div>
+			<div class="col-4"><span class="image fit"><img src="images/untitled4.jpg" alt="" /></span></div>
+			<div class="col-4"><span class="image fit"><img src="images/ROI.png" alt="" /></span></div>
+			<ul></ul>
+			<ul>
+
+				Each image represent the following procedures respectively:
+				<ul></ul><ul></ul>
+					<li>Images obtained from The Cancer Imaging Archive (TCIA) database </li>
+					<li>Increase the contrast of the image by transforming the values ​​using CLAHE.</li>
+					<li>Segmentation of the lung using binarization technique.</li>
+					<li>Identification of the thoracic cavity by extracting the 8-connected component with the largest area corresponding to the lungs and performing the inversion of the image.</li>
+					<li>Multiplication of the mask obtained with the original image.</li>
+					<li>Selection of ROI region of interest 150x150 pixels.</li>
+				</ul>
+			</div>
+			
+	
+	</div>
+</div>
+</div>
+<ul></ul>
+<header class="major">
+	<h2> Feature Extraction  </h2>
+	</header>
+<div class="row gtr-200">
+	<div class="col-6 col-12-medium">
+	<div class="row gtr-50 gtr-uniform">
+
+		<ul>
+			After obtaining the ROI for each image of the dataset, it was binarized and then each of its 8-connected components were found,
+			the component with the largest area was the one that was analyzed.
+
+		</ul> 
+	<div class="col-4"><span class="image fit"><img src="images/Captura.JPG" alt="" /></span></div>
+	<div class="col-4"><span class="image fit"><img src="images/Captura1.JPG" alt="" /></span></div>
+	<div class="col-4"><span class="image fit"><img src="images/Captura3.JPG" alt="" /></span></div>
+	<ul></ul>
+	<ul>
+		On the right side the feature extraction is shown. This information was setted in an excel file.
+	</ul>
+
+
+
+</div>
+</div>
+
+<div class="col-6 col-12-medium">
+<!-- Preformatted Code -->
+<pre><code>#Haralick Texture Features Extraction
+stats2=graycoprops(J);
+[Contrast, Correlation, Energy, Homogeneity] = getfield(stats2,'Contrast', 'Correlation', 'Energy', 'Homogeneity');
+Entropy=entropy(J);
+
+#Form Features Extraction
+cc = bwconncomp(bw,8);
+graindata = regionprops(cc,'basic');
+grain_areas = [graindata.Area] ;
+[max_area, idx] = max(grain_areas);
+grain = false(size(bw)); grain(cc.PixelIdxList{idx}) = true;
+s = regionprops('table',grain,'centroid', 'Area', 'Circularity', 'Eccentricity', 'Perimeter', 'Solidity' , 'EquivDiameter');
+area = getfield(s,'Area');
+centroids=cat(1,s.Centroid);
+centro1=centroids(:,1);
+centro2=centroids(:,2);
+
+</code></pre>
+</div>
+
+									</div>
+									<ul>A small part of the database we just made with this features of each ROI is shown below.
+										<p><a href="/SPN.xlsx" download> Click here</a> to download full dataset</p>
+									</ul>
+									<span class="image fit"><img src="images/Caract.JPG" alt="" /></span>
+									<div class="row gtr-200">
+									<div class="col-6 col-12-medium">
+									<header class="major">
+										<h2> Machine Learning </h2>
+									</header>
+<!-- Preformatted Code -->
+<pre><code>#Split of the dataset into labels and features
+X=SPN(:,[1,2,3,4,5,6,7,8,9,10,11,12,13]);
+y=SPN(:,14); 
+
+#Scaling
+X = rescale(X,0,1)
+
+#Cross validation
+c=cvpartition(SPN(:,14),'Kfold',10);
+for i=1:1:c.NumTestSets
+	train=c.training(i);
+	test=c.test(i);
+	TRAIN=SPN(train,:);
+	TEST=SPN(test,:);
+	Mdl{i}=fitcknn(TRAIN(:,1:13),TRAIN(:,14));
+	resultado=predict(Mdl{i},TEST(:,1:13));
+	groundt=TEST(:,14);
+	salida=[groundt,resultado];
+
+	#Confusion matrix
+	for j=1:1:length(salida)
+		if(groundt(j,1)==1 && resultado(j,1)==1)
+			Vp=Vp+1;
+		end
+		if(groundt(j,1)==0 && resultado(j,1)==0)
+			Vn=Vn+1;
+		end
+		if(groundt(j,1)==0 && resultado(j,1)==1)
+			Fp=Fp+1;
+		end
+		if(groundt(j,1)==1 && resultado(j,1)==0)
+			Fn=Fn+1;
+		end
+	end
+
+	resultados=[Vp Vn Fp Fn];
+	sensibilidad(i,1)=(Vp/(Vp+Fn));
+	especificidad(i,1)=(Vn/(Fp+Vn));
+	especificidadrock(i,1)=1-especificidad(i,1);
+	accuracy(i,1)=((Vp+Vn)/(Vp+Fn+Fp+Vn));
+
+end
+
+</code></pre>	
+</div>
+
+
+<div class="col-6 col-12-medium">
+<header class="major">
+	<h2> Results </h2>
+</header>
+
+										<article>
+											
+											<span class="image fit"><img src="images/ROCC33.jpg" alt="" /></span>
+											<p>Through the implementation of the ROC curve, the best model was chosen, from this, the ROI sections were evaluated indicating an increase in their brightness if an SPN was detected.</p>
+
+										</article>
+										<article>
+											<span class="image fit"><img src="images/resul.jpg" alt="" /></span>
+											
+										</article>
+										
+									</div>
+									<div class="col-6 col-12-medium">
+									<header class="major">
+										<h2> User Interface </h2>
+									</header>
+								</div>
+								<ul>
+									To upload and analyze an image, you need to click on the "Cargar Imagen" button in the upper right.
+								</ul>		
+								<span class="image fit"><img src="images/INTER2.JPG" alt="" /></span>
+
+								<ul>
+									A window will then open that directs you to your computer's file explorer. Select the image you want to upload and click the open button.
+								</ul>
+								<span class="image fit"><img src="images/INTER.JPG" alt="" /></span>
+
+								<ul>
+									The interface will indicate whether or not the image has an SPN and its respective location indicated in red. 
+									The central image indicates the ROI regions in which a possible SPN was detected.
+								</ul>
+								<span class="image fit"><img src="images/INTER3.JPG" alt="" /></span>
+
+								<ul>
+									When there is no nodule, a single image is displayed without indicating areas in red.
+								</ul>
+								<span class="image fit"><img src="images/INTER4.PNG" alt="" /></span>
+
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search 
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>-->
+
+							<!-- Menu 
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="generic.html">Generic</a></li>
+										<li><a href="elements.html">Elements</a></li>
+										<li>
+											<span class="opener">Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Etiam Dolore</a></li>
+										<li><a href="#">Adipiscing</a></li>
+										<li>
+											<span class="opener">Another Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Maximus Erat</a></li>
+										<li><a href="#">Sapien Mauris</a></li>
+										<li><a href="#">Amet Lacinia</a></li>
+									</ul>
+								</nav>
+
+							
+								<section>
+									<header class="major">
+										<h2>Ante interdum</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section>
+							-->
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p> I am a Colombian Biomedical Engineer that loves technology and healthcare. 
+									</p>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="mailto:milasandovalsantana@gmail.com">milasandovalsantana@gmail.com</a></li>
+										<li class="icon solid fa-phone"> 786-479-5494 </li>
+										<li class="icon solid fa-home">Tamarac, FL<br />
+										United Stated</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved.  Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
